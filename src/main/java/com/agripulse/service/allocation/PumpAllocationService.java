@@ -10,9 +10,9 @@ import java.util.PriorityQueue;
 @Service
 public class PumpAllocationService {
 
-    // ========================================================================
-    // ALGORITHM 1: MAX-HEAP (Your Primary Production Algorithm)
-    // ========================================================================
+
+    // ALGORITHM 1: MAX-HEAP ( Primary Production Algorithm)
+
     public List<PumpRequest> allocatePumpsWithMaxHeap(List<PumpRequest> allRequests, int availablePumps) {
         PriorityQueue<PumpRequest> maxHeap = new PriorityQueue<>(
                 (request1, request2) -> Double.compare(request2.getPriorityScore(), request1.getPriorityScore())
@@ -32,9 +32,9 @@ public class PumpAllocationService {
         return allocatedFarms;
     }
 
-    // ========================================================================
-    // ALGORITHM 2: TIMSORT / MERGE SORT (Comparison Baseline)
-    // ========================================================================
+
+    // ALGORITHM 2: TIMSORT / MERGE SORT
+
     public List<PumpRequest> allocatePumpsWithSort(List<PumpRequest> allRequests, int availablePumps) {
         List<PumpRequest> eligibleFarms = new ArrayList<>();
         for (PumpRequest request : allRequests) {
@@ -52,9 +52,9 @@ public class PumpAllocationService {
         return allocatedFarms;
     }
 
-    // ========================================================================
-    // ALGORITHM 3: SIMPLE GREEDY (Comparison Baseline)
-    // ========================================================================
+
+    // ALGORITHM 3: SIMPLE GREEDY
+
     public List<PumpRequest> allocatePumpsGreedyBaseline(List<PumpRequest> allRequests, int availablePumps) {
         List<PumpRequest> allocatedFarms = new ArrayList<>();
 

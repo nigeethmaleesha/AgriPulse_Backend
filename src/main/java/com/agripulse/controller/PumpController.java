@@ -24,7 +24,7 @@ public class PumpController {
 
     /**
      * BENCHMARK ENDPOINT: Runs all 3 algorithms on a synthetic dataset
-     * so you can compare their speeds for your PDSA report!
+     *
      */
     @GetMapping("/benchmark")
     public ResponseEntity<List<PumpAllocationResultDto>> runPumpBenchmark(
@@ -35,7 +35,7 @@ public class PumpController {
         List<PumpRequest> dummyRequests = generateDummyRequests(numberOfFarms);
         List<PumpAllocationResultDto> benchmarkResults = new ArrayList<>();
 
-        // 2. Test Max-Heap (Your primary algorithm)
+        // 2. Test Max-Heap ( primary algorithm)
         long startTime1 = System.currentTimeMillis();
         List<PumpRequest> heapResult = pumpAllocationService.allocatePumpsWithMaxHeap(new ArrayList<>(dummyRequests), availablePumps);
         long time1 = System.currentTimeMillis() - startTime1;

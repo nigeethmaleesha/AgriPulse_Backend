@@ -2,7 +2,7 @@ package com.agripulse.model;
 
 public class PumpRequest {
 
-    // Added 'final' to lock these variables and clear the warnings!
+
     private final Long farmId;
     private final double priorityScore;
     private final boolean isEligible;
