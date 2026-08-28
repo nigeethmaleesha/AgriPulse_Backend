@@ -1,20 +1,23 @@
 package com.agripulse.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Objects;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class HarvestBatch implements Comparable<HarvestBatch> {
 
     private String batchId;
     private String collectionPointId;
     private double priorityScore;
     private boolean ready;
+
+    public HarvestBatch() {
+    }
+
+    public HarvestBatch(String batchId, String collectionPointId, double priorityScore, boolean ready) {
+        this.batchId = batchId;
+        this.collectionPointId = collectionPointId;
+        this.priorityScore = priorityScore;
+        this.ready = ready;
+    }
 
     /**
      * Max-Heap ordering based on priorityScore (descending order).

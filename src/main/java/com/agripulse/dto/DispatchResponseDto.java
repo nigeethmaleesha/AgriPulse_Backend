@@ -1,16 +1,7 @@
 package com.agripulse.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class DispatchResponseDto {
 
     private String selectedBatchId;
@@ -19,6 +10,23 @@ public class DispatchResponseDto {
     private List<String> recommendedPath;
     private double totalRouteCost;
     private String statusMessage;
+
+    public DispatchResponseDto() {
+    }
+
+    public DispatchResponseDto(String selectedBatchId, String targetCollectionPoint, double priorityScore,
+                               List<String> recommendedPath, double totalRouteCost, String statusMessage) {
+        this.selectedBatchId = selectedBatchId;
+        this.targetCollectionPoint = targetCollectionPoint;
+        this.priorityScore = priorityScore;
+        this.recommendedPath = recommendedPath;
+        this.totalRouteCost = totalRouteCost;
+        this.statusMessage = statusMessage;
+    }
+
+    public static DispatchResponseDtoBuilder builder() {
+        return new DispatchResponseDtoBuilder();
+    }
 
     public String getSelectedBatchId() {
         return selectedBatchId;
@@ -66,5 +74,49 @@ public class DispatchResponseDto {
 
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    public static class DispatchResponseDtoBuilder {
+        private String selectedBatchId;
+        private String targetCollectionPoint;
+        private double priorityScore;
+        private List<String> recommendedPath;
+        private double totalRouteCost;
+        private String statusMessage;
+
+        public DispatchResponseDtoBuilder selectedBatchId(String selectedBatchId) {
+            this.selectedBatchId = selectedBatchId;
+            return this;
+        }
+
+        public DispatchResponseDtoBuilder targetCollectionPoint(String targetCollectionPoint) {
+            this.targetCollectionPoint = targetCollectionPoint;
+            return this;
+        }
+
+        public DispatchResponseDtoBuilder priorityScore(double priorityScore) {
+            this.priorityScore = priorityScore;
+            return this;
+        }
+
+        public DispatchResponseDtoBuilder recommendedPath(List<String> recommendedPath) {
+            this.recommendedPath = recommendedPath;
+            return this;
+        }
+
+        public DispatchResponseDtoBuilder totalRouteCost(double totalRouteCost) {
+            this.totalRouteCost = totalRouteCost;
+            return this;
+        }
+
+        public DispatchResponseDtoBuilder statusMessage(String statusMessage) {
+            this.statusMessage = statusMessage;
+            return this;
+        }
+
+        public DispatchResponseDto build() {
+            return new DispatchResponseDto(selectedBatchId, targetCollectionPoint, priorityScore,
+                    recommendedPath, totalRouteCost, statusMessage);
+        }
     }
 }

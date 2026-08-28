@@ -1,17 +1,11 @@
 package com.agripulse.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "roads")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Road {
 
     @Id
@@ -26,6 +20,21 @@ public class Road {
     private boolean monsoonStatus;
     private boolean isOpen;
     private double capacityKgPerDay;
+
+    public Road() {
+    }
+
+    public Road(Long id, String fromPointId, String toPointId, double distance, double incline, double roadQuality, boolean monsoonStatus, boolean isOpen, double capacityKgPerDay) {
+        this.id = id;
+        this.fromPointId = fromPointId;
+        this.toPointId = toPointId;
+        this.distance = distance;
+        this.incline = incline;
+        this.roadQuality = roadQuality;
+        this.monsoonStatus = monsoonStatus;
+        this.isOpen = isOpen;
+        this.capacityKgPerDay = capacityKgPerDay;
+    }
 
     public Long getId() {
         return id;

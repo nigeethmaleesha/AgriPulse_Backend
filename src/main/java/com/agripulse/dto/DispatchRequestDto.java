@@ -3,16 +3,10 @@ package com.agripulse.dto;
 import com.agripulse.model.HarvestBatch;
 import com.agripulse.model.RoadEdge;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DispatchRequestDto {
 
     @NotNull(message = "truckCurrentNode is required")
@@ -21,6 +15,15 @@ public class DispatchRequestDto {
     private List<HarvestBatch> readyBatches;
 
     private Map<String, List<RoadEdge>> roadGraph;
+
+    public DispatchRequestDto() {
+    }
+
+    public DispatchRequestDto(String truckCurrentNode, List<HarvestBatch> readyBatches, Map<String, List<RoadEdge>> roadGraph) {
+        this.truckCurrentNode = truckCurrentNode;
+        this.readyBatches = readyBatches;
+        this.roadGraph = roadGraph;
+    }
 
     public String getTruckCurrentNode() {
         return truckCurrentNode;

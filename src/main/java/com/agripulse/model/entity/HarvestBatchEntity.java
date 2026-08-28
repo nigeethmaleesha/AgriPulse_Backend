@@ -3,18 +3,12 @@ package com.agripulse.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "harvest_batches")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class HarvestBatchEntity {
 
     @Id
@@ -25,6 +19,18 @@ public class HarvestBatchEntity {
     private double priorityScore;
     private String status; // "READY", "COLLECTED", "IN_TRANSIT"
     private LocalDateTime harvestTime;
+
+    public HarvestBatchEntity() {
+    }
+
+    public HarvestBatchEntity(String id, String collectionPointId, double quantity, double priorityScore, String status, LocalDateTime harvestTime) {
+        this.id = id;
+        this.collectionPointId = collectionPointId;
+        this.quantity = quantity;
+        this.priorityScore = priorityScore;
+        this.status = status;
+        this.harvestTime = harvestTime;
+    }
 
     public String getId() {
         return id;

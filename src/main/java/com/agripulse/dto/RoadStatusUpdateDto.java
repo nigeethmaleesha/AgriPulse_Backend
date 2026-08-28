@@ -1,16 +1,17 @@
 package com.agripulse.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoadStatusUpdateDto {
 
     private boolean isOpen;
     private boolean monsoonStatus;
+
+    public RoadStatusUpdateDto() {
+    }
+
+    public RoadStatusUpdateDto(boolean isOpen, boolean monsoonStatus) {
+        this.isOpen = isOpen;
+        this.monsoonStatus = monsoonStatus;
+    }
 
     public boolean isOpen() {
         return isOpen;

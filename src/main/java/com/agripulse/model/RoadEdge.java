@@ -1,14 +1,7 @@
 package com.agripulse.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Objects;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoadEdge {
 
     private String toNode;
@@ -17,6 +10,18 @@ public class RoadEdge {
     private double qualityPenalty;
     private boolean monsoonAffected;
     private boolean open;
+
+    public RoadEdge() {
+    }
+
+    public RoadEdge(String toNode, double distance, double inclineFactor, double qualityPenalty, boolean monsoonAffected, boolean open) {
+        this.toNode = toNode;
+        this.distance = distance;
+        this.inclineFactor = inclineFactor;
+        this.qualityPenalty = qualityPenalty;
+        this.monsoonAffected = monsoonAffected;
+        this.open = open;
+    }
 
     /**
      * Computes effective edge cost according to:

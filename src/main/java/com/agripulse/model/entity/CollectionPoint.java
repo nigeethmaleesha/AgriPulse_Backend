@@ -3,17 +3,11 @@ package com.agripulse.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "collection_points")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CollectionPoint {
 
     @Id
@@ -22,6 +16,16 @@ public class CollectionPoint {
     private String name;
     private double latitude;
     private double longitude;
+
+    public CollectionPoint() {
+    }
+
+    public CollectionPoint(String id, String name, double latitude, double longitude) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public String getId() {
         return id;
