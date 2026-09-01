@@ -2,7 +2,14 @@ package com.agripulse.dto;
 
 public class FertilizerRequestCreateDto {
 
-    private Long farmId;
+    private String farmName;
+    private String contactNumber;
+
+    // Only required if this is a brand-new farm (not yet registered)
+    private String region;
+    private String cropType;
+    private Double landSize;
+
     private String fertilizerType;
     private int requestedBags;
     private double benefitScore;
@@ -11,12 +18,44 @@ public class FertilizerRequestCreateDto {
     public FertilizerRequestCreateDto() {
     }
 
-    public Long getFarmId() {
-        return farmId;
+    public String getFarmName() {
+        return farmName;
     }
 
-    public void setFarmId(Long farmId) {
-        this.farmId = farmId;
+    public void setFarmName(String farmName) {
+        this.farmName = farmName;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCropType() {
+        return cropType;
+    }
+
+    public void setCropType(String cropType) {
+        this.cropType = cropType;
+    }
+
+    public Double getLandSize() {
+        return landSize;
+    }
+
+    public void setLandSize(Double landSize) {
+        this.landSize = landSize;
     }
 
     public String getFertilizerType() {

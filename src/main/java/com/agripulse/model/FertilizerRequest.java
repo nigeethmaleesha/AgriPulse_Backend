@@ -2,7 +2,7 @@ package com.agripulse.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,13 +16,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "fertilizer_request")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FertilizerRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "fertilizerRequests"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;

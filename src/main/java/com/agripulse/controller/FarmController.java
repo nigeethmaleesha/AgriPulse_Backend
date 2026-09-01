@@ -15,7 +15,10 @@ import com.agripulse.exception.FertilizerAllocationException;
 import com.agripulse.model.Farm;
 import com.agripulse.repository.FarmRepository;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/farms")
 public class FarmController {
 

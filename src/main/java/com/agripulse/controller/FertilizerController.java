@@ -24,7 +24,10 @@ import com.agripulse.service.allocation.FertilizerAllocationService;
 import com.agripulse.service.allocation.FractionalKnapsackService;
 import com.agripulse.service.allocation.GreedyPriorityAllocationService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/fertilizer")
 public class FertilizerController {
 
@@ -51,23 +54,57 @@ public class FertilizerController {
     }
 
     // Create a fertilizer request — now requires an existing farmId
-    @PostMapping("/requests")
-    public ResponseEntity<FertilizerRequest> createRequest(@RequestBody FertilizerRequestCreateDto dto) {
-        Farm farm = farmRepository.findById(dto.getFarmId())
-                .orElseThrow(() -> new FertilizerAllocationException(
-                        "Farm not found with id: " + dto.getFarmId()));
+@PostMapping("/requests")
+public ResponseEntity<FertilizerRequest> createRequest(@RequestBody FertilizerRequestCreateDto dto) {
 
-        FertilizerRequest request = new FertilizerRequest(
-                farm,
-                dto.getFertilizerType(),
-                dto.getRequestedBags(),
-                dto.getBenefitScore(),
-                dto.getUrgencyLevel()
-        );
-
-        FertilizerRequest saved = repository.save(request);
-        return ResponseEntity.ok(saved);
+    if (dto.getContactNumber() == null || dto.getContactNumber().isBlank()) {
+        throw new FertilizerAllocationException("Farm contact number is required.");
     }
+    if (dto.getFarmName() == null || dto.getFarmName().isBlank()) {
+        throw new FertilizerAllocationException("Farm name is required.");
+    }
+
+    Farm farm = farmRepository.findByContactNumber(dto.getContactNumber())
+            .map(existingFarm -> {
+                // Farm already registered — auto-fill region/cropType/landSize from existing record.
+                // Verify the submitted farm name matches, to catch typos/mixups.
+                if (!dto.getFarmName().equalsIgnoreCase(existingFarm.getFarmName())) {
+                    throw new FertilizerAllocationException(
+                            "Contact number " + dto.getContactNumber() + " is already registered to farm '"
+                                    + existingFarm.getFarmName() + "', not '" + dto.getFarmName() + "'. "
+                                    + "Please verify the details."
+                    );
+                }
+                return existingFarm;
+            })
+            .orElseGet(() -> {
+                // New farm — region is the minimum required info to register it
+                if (dto.getRegion() == null || dto.getRegion().isBlank()) {
+                    throw new FertilizerAllocationException(
+                            "This is a new farm (contact number not found). Region is required to register it."
+                    );
+                }
+                Farm newFarm = new Farm(
+                        dto.getFarmName(),
+                        dto.getContactNumber(),
+                        dto.getRegion(),
+                        dto.getCropType(),
+                        dto.getLandSize()
+                );
+                return farmRepository.save(newFarm);
+            });
+
+    FertilizerRequest request = new FertilizerRequest(
+            farm,
+            dto.getFertilizerType(),
+            dto.getRequestedBags(),
+            dto.getBenefitScore(),
+            dto.getUrgencyLevel()
+    );
+
+    FertilizerRequest saved = repository.save(request);
+    return ResponseEntity.ok(saved);
+}
 
     @GetMapping("/requests")
     public ResponseEntity<List<FertilizerRequest>> getAllRequests() {

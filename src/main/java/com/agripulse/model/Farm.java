@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "farm")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Farm {
 
     @Id
@@ -41,7 +42,7 @@ public class Farm {
     @Column(nullable = false, updatable = false)
     private LocalDateTime registeredAt = LocalDateTime.now();
 
-    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "farm"})
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private List<FertilizerRequest> fertilizerRequests = new ArrayList<>();
 

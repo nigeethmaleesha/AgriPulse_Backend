@@ -34,9 +34,9 @@ public class FractionalKnapsackService {
         // Work on a copy so we don't disturb the original list ordering
         List<FertilizerRequest> sorted = new ArrayList<>(requests);
 
-        // Sort descending by value/weight ratio (benefit per bag)
+        // Sort descending by value/weight ratio (benefit per bag), guarding against division by zero
         sorted.sort(Comparator.comparingDouble(
-                (FertilizerRequest r) -> r.getBenefitScore() / r.getRequestedBags()
+                (FertilizerRequest r) -> r.getRequestedBags() <= 0 ? 0.0 : r.getBenefitScore() / r.getRequestedBags()
         ).reversed());
 
         List<FertilizerRequest> allocated = new ArrayList<>();
