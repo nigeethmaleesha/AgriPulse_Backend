@@ -1,14 +1,16 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8084
 
 spring:
   application:
     name: agripulse-backend
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:agripulse}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/agripulse_5}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER_CLASS_NAME:org.postgresql.Driver}
   jpa:
+    database-platform: ${DB_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
     hibernate:
       ddl-auto: update
     open-in-view: false
