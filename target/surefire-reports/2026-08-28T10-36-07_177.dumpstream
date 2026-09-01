@@ -1,0 +1,5 @@
+# Created at 2026-08-28T10:36:07.386
+Boot Manifest-JAR contains absolute paths in classpath 'D:\NIBM\3rd year\PDSA - 2\System\sys\AgriPulse_Backend\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
