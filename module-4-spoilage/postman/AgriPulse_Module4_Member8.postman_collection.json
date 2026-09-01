@@ -1,0 +1,70 @@
+{
+  "info": {
+    "name": "AgriPulse Module 4 - Member 8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8081"},
+    {"key": "batchId", "value": "1"}
+  ],
+  "item": [
+    {
+      "name": "01 Member 7 - Add Shared Batch",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"farmId\": 1,\n  \"collectionPointId\": 1,\n  \"quantity\": 120.5,\n  \"harvestTime\": \"2026-08-25T00:00:00\",\n  \"temperature\": 29.0,\n  \"humidity\": 88.0\n}"},
+        "url": "{{baseUrl}}/api/spoilage/batches"
+      }
+    },
+    {
+      "name": "02 Member 7 - Rank Shared Batches",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/ranking?method=merge"}
+    },
+    {
+      "name": "03 Member 8 - Reload Max Heap",
+      "request": {"method": "POST", "url": "{{baseUrl}}/api/spoilage/priority/reload"}
+    },
+    {
+      "name": "04 Member 8 - Highest Risk Top",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/priority/top"}
+    },
+    {
+      "name": "05 Member 8 - Add Live Incoming Batch",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"farmId\": 5,\n  \"collectionPointId\": 3,\n  \"quantity\": 105.0,\n  \"harvestTime\": \"2026-08-24T20:00:00\",\n  \"temperature\": 32.0,\n  \"humidity\": 92.0\n}"},
+        "url": "{{baseUrl}}/api/spoilage/priority/batches"
+      }
+    },
+    {
+      "name": "06 Member 8 - Heap View",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/priority/heap"}
+    },
+    {
+      "name": "07 Member 8 - Ordered View",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/priority/ordered"}
+    },
+    {
+      "name": "08 Member 8 - Refresh Existing Priority",
+      "request": {"method": "PUT", "url": "{{baseUrl}}/api/spoilage/priority/refresh/{{batchId}}"}
+    },
+    {
+      "name": "09 Member 8 - Pop Highest Risk",
+      "request": {"method": "POST", "url": "{{baseUrl}}/api/spoilage/priority/pop"}
+    },
+    {
+      "name": "10 Benchmark Presets",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/priority/benchmark/presets"}
+    },
+    {
+      "name": "11 Benchmark Small",
+      "request": {"method": "POST", "url": "{{baseUrl}}/api/spoilage/priority/benchmark?sizes=100&incomingOperations=50"}
+    },
+    {
+      "name": "12 Benchmark Results",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/spoilage/priority/benchmark/results"}
+    }
+  ]
+}
