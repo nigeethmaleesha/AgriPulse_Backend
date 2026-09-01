@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "AgriPulse Module 3 - Member 5",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080"}
+  ],
+  "item": [
+    {
+      "name": "Get Graph",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/network/graph"
+      }
+    },
+    {
+      "name": "Run Demo Max Flow",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"saveBenchmark\": true\n}"
+        },
+        "url": "{{baseUrl}}/api/network/max-flow"
+      }
+    },
+    {
+      "name": "Benchmark Small 20/30",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nodeCount\": 20,\n  \"edgeCount\": 30,\n  \"seed\": 42,\n  \"minCapacityKgPerDay\": 100,\n  \"maxCapacityKgPerDay\": 2000,\n  \"saveResult\": true\n}"
+        },
+        "url": "{{baseUrl}}/api/network/benchmark"
+      }
+    },
+    {
+      "name": "Benchmark Medium 100/250",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nodeCount\": 100,\n  \"edgeCount\": 250,\n  \"seed\": 42,\n  \"minCapacityKgPerDay\": 100,\n  \"maxCapacityKgPerDay\": 2000,\n  \"saveResult\": true\n}"
+        },
+        "url": "{{baseUrl}}/api/network/benchmark"
+      }
+    },
+    {
+      "name": "Benchmark Large 500/2000",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nodeCount\": 500,\n  \"edgeCount\": 2000,\n  \"seed\": 42,\n  \"minCapacityKgPerDay\": 100,\n  \"maxCapacityKgPerDay\": 2000,\n  \"saveResult\": true\n}"
+        },
+        "url": "{{baseUrl}}/api/network/benchmark"
+      }
+    },
+    {
+      "name": "Get Saved Results",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/network/max-flow/results"
+      }
+    }
+  ]
+}
