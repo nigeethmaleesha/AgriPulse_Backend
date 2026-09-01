@@ -1,79 +1,55 @@
 package com.agripulse.backend.controller;
 
+import com.agripulse.backend.dto.FactoryScheduleRequest;
 import com.agripulse.backend.service.scheduling.FactorySchedulingService;
-import com.agripulse.backend.service.scheduling.Machine;
-import com.agripulse.backend.service.scheduling.PowerOutage;
-import com.agripulse.backend.service.scheduling.ProductionTask;
-import com.agripulse.backend.service.scheduling.ScheduleEntry;
-import com.agripulse.backend.service.scheduling.Worker;
-
+import com.agripulse.backend.service.scheduling.ScheduleComparisonResult;
+import com.agripulse.backend.service.scheduling.ScheduleResult;
+import com.agripulse.backend.service.scheduling.SchedulingBenchmarkRow;
+import com.agripulse.backend.service.scheduling.SchedulingBenchmarkService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Factory Processing & Worker Shift Scheduling.
+ * Genetic Algorithm vs Simulated Annealing comparison.
+ */
 @RestController
 @RequestMapping("/api/scheduling")
 public class FactorySchedulingController {
 
     private final FactorySchedulingService schedulingService;
+    private final SchedulingBenchmarkService benchmarkService;
 
-    public FactorySchedulingController(
-            FactorySchedulingService schedulingService) {
+    public FactorySchedulingController(FactorySchedulingService schedulingService,
+                                        SchedulingBenchmarkService benchmarkService) {
         this.schedulingService = schedulingService;
+        this.benchmarkService = benchmarkService;
     }
 
-    @PostMapping("/generate")
-    public List<ScheduleEntry> generateSchedule(
-            @RequestBody SchedulingRequest request) {
-
-        return schedulingService.generateSchedule(
-                request.getTasks(),
-                request.getWorkers(),
-                request.getMachines(),
-                request.getOutages()
-        );
+    @PostMapping("/genetic")
+    public ScheduleResult runGenetic(@Valid @RequestBody FactoryScheduleRequest request) {
+        return schedulingService.runGenetic(request.tasks(), request.workers(), request.machines(), request.outages());
     }
 
-    public static class SchedulingRequest {
+    @PostMapping("/annealing")
+    public ScheduleResult runAnnealing(@Valid @RequestBody FactoryScheduleRequest request) {
+        return schedulingService.runAnnealing(request.tasks(), request.workers(), request.machines(), request.outages());
+    }
 
-        private List<ProductionTask> tasks;
-        private List<Worker> workers;
-        private List<Machine> machines;
-        private List<PowerOutage> outages;
+    @PostMapping("/compare")
+    public ScheduleComparisonResult compare(@Valid @RequestBody FactoryScheduleRequest request) {
+        return schedulingService.compare(request.tasks(), request.workers(), request.machines(), request.outages());
+    }
 
-        public SchedulingRequest() {
-        }
+    @GetMapping("/benchmark/presets")
+    public List<Integer> benchmarkPresets() {
+        return SchedulingBenchmarkService.PRESET_SIZES;
+    }
 
-        public List<ProductionTask> getTasks() {
-            return tasks;
-        }
-
-        public void setTasks(List<ProductionTask> tasks) {
-            this.tasks = tasks;
-        }
-
-        public List<Worker> getWorkers() {
-            return workers;
-        }
-
-        public void setWorkers(List<Worker> workers) {
-            this.workers = workers;
-        }
-
-        public List<Machine> getMachines() {
-            return machines;
-        }
-
-        public void setMachines(List<Machine> machines) {
-            this.machines = machines;
-        }
-
-        public List<PowerOutage> getOutages() {
-            return outages;
-        }
-
-        public void setOutages(List<PowerOutage> outages) {
-            this.outages = outages;
-        }
+    @PostMapping("/benchmark")
+    public List<SchedulingBenchmarkRow> runBenchmark(@RequestParam(required = false) List<Integer> sizes) {
+        return benchmarkService.run(sizes);
     }
 }
