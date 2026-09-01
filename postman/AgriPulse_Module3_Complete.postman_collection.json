@@ -1,0 +1,344 @@
+{
+  "info": {
+    "name": "AgriPulse Module 3 Complete - Members 5 and 6",
+    "_postman_id": "9db1cd8f-f10a-4a86-b3f2-agripulsemodule3",
+    "description": "Integrated Module 3 API. Member 5 provides capacity graph + Ford-Fulkerson. Member 6 provides bottleneck analysis and capacity scenarios using the same services.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Task 3A - Member 5",
+      "item": [
+        {
+          "name": "Get Graph",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/graph",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "graph"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Run Max Flow",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/max-flow",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "max-flow"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"saveBenchmark\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Max Flow Benchmark",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/benchmark",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "benchmark"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nodeCount\": 20,\n  \"edgeCount\": 30,\n  \"seed\": 42,\n  \"minCapacityKgPerDay\": 100,\n  \"maxCapacityKgPerDay\": 2000,\n  \"saveResult\": true,\n  \"topN\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Benchmark Presets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/benchmark/presets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "benchmark",
+                "presets"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Task 3B - Member 6",
+      "item": [
+        {
+          "name": "Full Bottleneck Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/analyze",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "analyze"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"topN\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Close H1 to Factory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/scenario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "scenario"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"scenario\": {\n    \"name\": \"Close H1 to Factory\",\n    \"type\": \"CLOSE_LINK\",\n    \"fromCode\": \"H1\",\n    \"toCode\": \"FACTORY\",\n    \"newCapacityKgPerDay\": null,\n    \"percent\": null\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Reduce H1 to Factory by 25%",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/scenario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "scenario"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"scenario\": {\n    \"name\": \"Reduce H1 to Factory by 25 percent\",\n    \"type\": \"REDUCE_BY_PERCENT\",\n    \"fromCode\": \"H1\",\n    \"toCode\": \"FACTORY\",\n    \"newCapacityKgPerDay\": null,\n    \"percent\": 25\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Upgrade H2 to Factory by 50%",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/scenario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "scenario"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"scenario\": {\n    \"name\": \"Upgrade H2 to Factory by 50 percent\",\n    \"type\": \"INCREASE_BY_PERCENT\",\n    \"fromCode\": \"H2\",\n    \"toCode\": \"FACTORY\",\n    \"newCapacityKgPerDay\": null,\n    \"percent\": 50\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Run Multiple Scenarios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/scenarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "scenarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCode\": \"SOURCE\",\n  \"sinkCode\": \"FACTORY\",\n  \"scenarios\": [\n    {\n      \"name\": \"Close H1 to Factory\",\n      \"type\": \"CLOSE_LINK\",\n      \"fromCode\": \"H1\",\n      \"toCode\": \"FACTORY\",\n      \"newCapacityKgPerDay\": null,\n      \"percent\": null\n    },\n    {\n      \"name\": \"Reduce H2 to Factory by 20 percent\",\n      \"type\": \"REDUCE_BY_PERCENT\",\n      \"fromCode\": \"H2\",\n      \"toCode\": \"FACTORY\",\n      \"newCapacityKgPerDay\": null,\n      \"percent\": 20\n    },\n    {\n      \"name\": \"Upgrade H1 to Factory by 50 percent\",\n      \"type\": \"INCREASE_BY_PERCENT\",\n      \"fromCode\": \"H1\",\n      \"toCode\": \"FACTORY\",\n      \"newCapacityKgPerDay\": null,\n      \"percent\": 50\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Bottleneck Benchmark",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/benchmark/bottlenecks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "benchmark",
+                "bottlenecks"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nodeCount\": 20,\n  \"edgeCount\": 30,\n  \"seed\": 42,\n  \"minCapacityKgPerDay\": 100,\n  \"maxCapacityKgPerDay\": 2000,\n  \"saveResult\": true,\n  \"topN\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Bottleneck Presets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/network/bottlenecks/presets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "network",
+                "bottlenecks",
+                "presets"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
