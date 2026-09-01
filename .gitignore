@@ -1,0 +1,19 @@
+# Java / Maven
+target/
+*.class
+*.log
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# VS Code
+.vscode/
+
+# Environment secrets
+.env
+
+# OS
+.DS_Store
+Thumbs.db
