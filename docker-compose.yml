@@ -1,22 +1,16 @@
-name: agripulse_complete_integration
-
 services:
   postgres:
     image: postgres:16-alpine
     container_name: agripulse-postgres
-
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: postgres
-
     ports:
       - "55432:5432"
-
     volumes:
       - agripulse_postgres_data:/var/lib/postgresql/data
       - ./database/create-databases.sql:/docker-entrypoint-initdb.d/01-create-databases.sql:ro
-
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
       interval: 5s
