@@ -1,30 +1,24 @@
 package com.agripulse.backend.service.scheduling;
 
-public class PowerOutage {
-
-    private String outageId;
-    private int startHour;
-    private int endHour;
-
-    public PowerOutage(String outageId, int startHour, int endHour) {
-        this.outageId = outageId;
-        this.startHour = startHour;
-        this.endHour = endHour;
+/**
+ * A recurring daily power outage window (24-hour clock). No task may start
+ * or be in progress during an hour covered by an outage.
+ */
+public record PowerOutage(
+        String outageId,
+        int startHour,
+        int endHour
+) {
+    public PowerOutage {
+        if (outageId == null || outageId.isBlank()) {
+            throw new IllegalArgumentException("outageId cannot be blank");
+        }
+        if (startHour < 0 || endHour > 24 || endHour <= startHour) {
+            throw new IllegalArgumentException("outage hours must satisfy 0 <= startHour < endHour <= 24");
+        }
     }
 
-    public String getOutageId() {
-        return outageId;
-    }
-
-    public int getStartHour() {
-        return startHour;
-    }
-
-    public int getEndHour() {
-        return endHour;
-    }
-
-    public boolean affectsHour(int hour) {
-        return hour >= startHour && hour < endHour;
+    public boolean affectsHourOfDay(int hourOfDay) {
+        return hourOfDay >= startHour && hourOfDay < endHour;
     }
 }
