@@ -46,6 +46,18 @@ public class NetworkController {
         return supplyNetworkService.getGraph();
     }
 
+    /** Clears the saved Module 3 network so a user can build it manually. */
+    @DeleteMapping("/graph")
+    public GraphResponse clearGraph() {
+        return supplyNetworkService.clearGraph();
+    }
+
+    /** Replaces the saved Module 3 network with the reproducible coursework demo graph. */
+    @PostMapping("/graph/demo")
+    public GraphResponse loadDemoGraph() {
+        return supplyNetworkService.replaceWithDemoNetwork();
+    }
+
     @GetMapping("/nodes")
     public List<NodeResponse> nodes() {
         return supplyNetworkService.getNodes();

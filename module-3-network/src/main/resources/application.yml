@@ -5,9 +5,9 @@ spring:
   application:
     name: agripulse-backend
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:agripulse_module3_network}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:agripulse}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:1234}
+    password: ${DB_PASSWORD:postgres}
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,7 +20,7 @@ spring:
       write-dates-as-timestamps: false
 
 agripulse:
-  seed-demo: ${SEED_DEMO:true}
+  seed-demo: ${SEED_DEMO:false}
 
 app:
   cors:

@@ -1,6 +1,4 @@
-# AgriPulse Backend - PDSA2 Module 3 / Members 5-6
-
-> Integrated runtime: port `8080`, database `agripulse_module3_network`, PostgreSQL user `postgres`, password `1234`. Start the shared PostgreSQL service from the project-root `docker-compose.yml`.
+# AgriPulse Backend - PDSA2 Module 3 / Member 5
 
 This repository contains the backend implementation for **Module 3: Tea Supply Network Capacity & Bottleneck Analysis - Member 5: Capacity Graph & Ford-Fulkerson Engine**.
 
